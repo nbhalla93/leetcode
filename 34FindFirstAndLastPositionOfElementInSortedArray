@@ -1,0 +1,25 @@
+class Solution:
+    def extreme_insertion_index(self,nums,target,left):
+        lo = 0
+        hi = len(nums)
+        
+        while lo < hi:
+            mid = (lo+hi)//2
+            if nums[mid] > target or (left and target == nums[mid]):
+                hi = mid
+            else:
+                lo = mid + 1
+        return lo
+
+    def searchRange(self, nums, target):
+        left_idx = self.extreme_insertion_index(nums, target, True)
+
+        if left_idx == len(nums) or nums[left_idx] != target:
+            return [-1, -1]
+
+        return [left_idx, self.extreme_insertion_index(nums, target, False)-1]
+        
+# idea behind this is to find the left and right indexes where the given target starts and ends
+# So we will do two binary search to figure the two ends.
+# For left, we keep looking at the left for the index from where we can start inserting the target
+# For right, we keep looking for the index where we can add more target

@@ -1,0 +1,20 @@
+class Solution:
+    def perm(self, result, n, currentSet, nums):
+        if len(currentSet) == n:
+            result.append(currentSet)
+            return
+        
+        for i,num in enumerate(nums):
+            self.perm(result, n, currentSet + [num], nums[:i] + nums[i+1:])
+        
+        return result
+    
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        result = []
+        return self.perm(result, len(nums), [], nums)
+        
+        
+It is a simple backtracking solution, reason for using backtracking is that we have to go through all the possible configurations.
+Base Case: Length of a set = n
+Recursive: Add a num into the set and call for the rest of nums
+Return result which includes all the permutations

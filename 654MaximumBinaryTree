@@ -1,0 +1,45 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+#Solution 1: Basic Recursion, Create root node with max value and then call the function on left subarray and make it left subtree 
+# and call the function on right subarray and make it right subtree.
+class Solution:
+    def constructMaximumBinaryTree(self, nums: List[int]) -> TreeNode:
+        if len(nums) == 0:
+            return None
+        
+        i = nums.index(max(nums))
+        node = TreeNode(nums[i])
+        node.left = self.constructMaximumBinaryTree(nums[:i])
+        node.right = self.constructMaximumBinaryTree(nums[i+1:])
+        return node
+
+
+#Solution 2: O(n) solution, we add nodes to the stack and keep adding the new node as the right child as long as it is smaller
+# than the top elements on the stack. Else we pop until an element bigger than the current element is on top of stack and change
+# its right node to the current node and make the right node of the top of the stack element as the left node of the current
+# node. 
+class Solution:
+    def constructMaximumBinaryTree(self, nums: List[int]) -> TreeNode:
+        stack = []
+        last = None
+        if not nums:
+            return None
+        for num in nums:
+            while stack and stack[-1].val < num:
+                last = stack.pop()
+            
+            node = TreeNode(num)
+            if not len(stack) == 0:
+                stack[-1].right = node
+                
+            if last:
+                node.left = last
+            stack.append(node)  
+            last = None
+        return stack[0]
+        

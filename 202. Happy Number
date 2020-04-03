@@ -1,0 +1,17 @@
+class Solution:
+    def sumOfSquaresOfDigits(self, n):        
+        sumValue = 0
+        while n > 0:
+            sumValue += (n%10)**2
+            n = n//10
+        return sumValue
+        
+    def isHappy(self, n: int) -> bool:
+        setValue = set()
+        
+        div = 10
+        while n != 1 and not n in setValue:
+            setValue.add(n)
+            n = self.sumOfSquaresOfDigits(n)
+            if n ==1 :
+                return True

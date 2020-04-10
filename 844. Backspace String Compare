@@ -1,0 +1,38 @@
+class Solution:
+    def backspaceCompare(self, S: str, T: str) -> bool:
+        stack1 = collections.deque([])
+        stack2 = collections.deque([])
+        
+        for s in S:
+            if not s == "#":
+                stack1.append(s)
+            else:
+                if stack1:
+                    stack1.pop()
+        
+        for t in T:
+            if not t == "#":
+                stack2.append(t)
+            else:
+                if stack2:
+                    stack2.pop()
+        
+        while stack1 and stack2:
+            if not stack1[-1] == stack2[-1]:
+                return False
+            stack1.pop()
+            stack2.pop()
+        
+        return not (stack1 or stack2)
+            
+                    
+                    
+        
+        
+        
+
+
+
+                
+            
+        

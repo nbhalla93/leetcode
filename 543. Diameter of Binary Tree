@@ -1,0 +1,17 @@
+class Solution:  
+    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+        if root == None:
+            return 0
+        self.maxValue = 0
+        def maxDepth(root) -> int:
+            if root == None:
+                return 0
+
+            l = maxDepth(root.left)
+            r = maxDepth(root.right)
+            d = 1 + max(l,r)
+            self.maxValue = max(self.maxValue, l + r)
+            return d
+        
+        maxDepth(root)
+        return self.maxValue

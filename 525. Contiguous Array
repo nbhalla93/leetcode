@@ -1,0 +1,13 @@
+class Solution:
+    def findMaxLength(self, nums: List[int]) -> int:
+        hashMap = {}
+        hashMap[0] = -1
+        sumValue = 0
+        maxLength = 0
+        for i, num in enumerate(nums):
+            sumValue += (1 if num == 1 else -1)
+            if sumValue in hashMap:
+                maxLength = max(maxLength, i-hashMap[sumValue])
+            else:
+                hashMap[sumValue] = i
+        return maxLength

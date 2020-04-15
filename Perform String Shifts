@@ -1,0 +1,19 @@
+class Solution:
+    def shift(self, s, amount, left):
+        n = len(s)
+        shift = amount%n
+        if left:
+            return s[shift:] + s[:shift]
+        else:
+            return s[(n-shift):] + s[:(n-shift)]
+        
+    def stringShift(self, s: str, shift: List[List[int]]) -> str:
+        right = 0
+        left = 0
+        for st in shift:
+            if st[0] == 0:
+                left += st[1]
+            else:
+                right += st[1]
+        shift = (left-right) if (left > right) else (right-left)
+        return self.shift(s, shift, (True if left > right else False))

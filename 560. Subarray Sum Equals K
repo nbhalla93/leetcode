@@ -1,0 +1,17 @@
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        sumMap = collections.defaultdict(int)
+        sumMap[0] = 1
+        sumValue = 0
+        count = 0
+        for num in nums:
+            sumValue += num
+            targetSum = sumValue - k
+            if targetSum in sumMap:
+                count += sumMap[targetSum]
+                
+            sumMap[sumValue] += 1                
+
+        return count
+                 

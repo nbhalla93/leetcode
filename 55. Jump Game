@@ -1,0 +1,14 @@
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        n = len(nums)
+        lastGoodPos = n-1
+        for i in reversed(range(n)):
+            if i + nums[i] >= lastGoodPos:
+                lastGoodPos = i
+        return (lastGoodPos == 0)
+        
+        /*
+        Last good position defines a subproblem, if we can reach that position, it means we can reach the end. 
+        Going in the backward direction, we are updating the last good position and if it is 0 in the end, then
+        we can reach the last index from 0 index
+        */

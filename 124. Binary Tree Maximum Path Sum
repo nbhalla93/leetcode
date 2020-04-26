@@ -1,0 +1,18 @@
+class Solution:  
+    def maxPathSum(self, root: TreeNode) -> int:
+        self.maxSumValue = -sys.maxsize - 1
+
+        def maxSum(root):
+            if root == None:
+                return -sys.maxsize - 1
+                        
+            leftMax = maxSum(root.left)             
+            rightMax = maxSum(root.right)
+            
+            rootMax = root.val + (leftMax if leftMax> 0 else 0) + (rightMax if rightMax> 0 else 0)
+            
+            self.maxSumValue = max(rootMax, self.maxSumValue)
+            return root.val + max(leftMax,rightMax,0)
+            
+        maxSum(root)
+        return self.maxSumValue

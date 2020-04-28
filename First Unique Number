@@ -1,0 +1,41 @@
+class DoubleLinkedList:
+    def __init__(self, val):
+        self.val = val
+        self.prev = None
+        self.next = None
+    
+class FirstUnique:
+    def __init__(self, nums: List[int]):
+        self.hashMap = {}
+        self.head = DoubleLinkedList(0)
+        self.tail = DoubleLinkedList(0)
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        for num in nums:
+            self.add(num)
+            
+    def showFirstUnique(self) -> int:
+        node = self.head.next
+        return self.head.next.val if (not self.head.next.val == 0) else -1
+
+    def add(self, value: int) -> None:
+        if value in self.hashMap: 
+            if self.hashMap[value]:
+                node = self.hashMap[value]
+                node.prev.next = node.next
+                node.next.prev = node.prev
+                self.hashMap[value] = None
+        else:
+            node = DoubleLinkedList(value)
+            node.prev = self.tail.prev
+            self.tail.prev.next = node
+            self.tail.prev = node
+            node.next = self.tail
+            self.hashMap[value] = node
+        
+
+
+# Your FirstUnique object will be instantiated and called as such:
+# obj = FirstUnique(nums)
+# param_1 = obj.showFirstUnique()
+# obj.add(value)

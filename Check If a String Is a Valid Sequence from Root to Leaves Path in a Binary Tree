@@ -1,0 +1,26 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def search(self,root,index,arr) -> bool:    
+        if root == None:
+            return False
+        
+        if index == len(arr)-1:
+            return root.val == arr[index] and not root.left and not root.right
+        
+        if root.val == arr[index]:
+            left = self.search(root.left,index+1,arr) 
+            right = self.search(root.right,index+1,arr) 
+            
+            return (left or right)
+        else:
+            return False
+              
+    def isValidSequence(self, root: TreeNode, arr: List[int]) -> bool:        
+        return self.search(root, 0,arr)
+                
+                

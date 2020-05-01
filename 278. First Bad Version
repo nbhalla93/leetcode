@@ -1,0 +1,16 @@
+class Solution:   
+    def firstBadVersion(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        l = 1
+        h = n
+        while l < h:
+            m = (l+h)//2
+            value = isBadVersion(m)
+            if not value:
+                l = m+1
+            else:
+                h = m
+        return l

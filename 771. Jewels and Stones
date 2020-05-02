@@ -1,0 +1,6 @@
+class Solution:
+    def numJewelsInStones(self, J: str, S: str) -> int:
+        count = 0
+        hashSet = set(J)
+        
+        return sum(s in hashSet for s in S)

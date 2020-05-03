@@ -1,0 +1,14 @@
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        hashMap = collections.defaultdict(int)
+        for c in magazine:
+            hashMap[c] += 1
+            
+        for n in ransomNote:
+            if not n in hashMap:
+                return False
+            else:
+                hashMap[n] -= 1
+                if hashMap[n] == 0:
+                    del hashMap[n]
+        return True

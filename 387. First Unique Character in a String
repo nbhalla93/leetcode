@@ -1,0 +1,14 @@
+class Solution(object):
+    def firstUniqChar(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        hashMap = collections.defaultdict(int)
+        for char in s:
+            hashMap[char] += 1
+        
+        for i,char in enumerate(s):
+            if hashMap[char] == 1:
+                return i
+        return -1

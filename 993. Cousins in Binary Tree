@@ -1,0 +1,23 @@
+class Solution:
+    def isCousins(self, root: TreeNode, x: int, y: int) -> bool:
+        queue = collections.deque([]) 
+        queue.append((root,0))
+        hashMap = {}
+        while queue:
+            node,level = queue.popleft()
+            if node:
+                if node.left:
+                    queue.append((node.left, level+1))
+                    if node.left.val == x or node.left.val == y:
+                        hashMap[node.left.val] = (node.val, level+1)
+                if node.right:
+                    queue.append((node.right, level+1))
+                    if node.right.val == x or node.right.val == y:
+                        hashMap[node.right.val] = (node.val, level+1)
+                        
+        if x in hashMap and y in hashMap:
+            xP,xL =  hashMap[x]
+            yP,yL =  hashMap[y]
+            return not(xP == yP) and (xL == yL)
+        else:
+            return False

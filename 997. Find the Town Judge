@@ -1,0 +1,15 @@
+class Solution:
+    def findJudge(self, N: int, trust: List[List[int]]) -> int:
+        hashSet = set(range(1, N+1))
+        hashMap = collections.defaultdict(list)
+        for i,j in trust:
+            hashMap[j].append(i)
+            if i in hashSet:
+                hashSet.remove(i)
+        
+        if not len(hashSet) == 0:
+            x = hashSet.pop()
+            return x if (len(hashMap[x]) == N-1) else -1
+        else:
+            return -1
+            

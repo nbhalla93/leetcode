@@ -1,0 +1,17 @@
+class Solution:
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, newColor: int) -> List[List[int]]:
+            
+        def modFloodFill(image,i,j,newColor,startingColor,r,c):
+            if i <0 or j < 0 or i >=r or j >= c or not image[i][j] == startingColor:
+                return
+
+            image[i][j] = newColor
+            modFloodFill(image,i+1,j,newColor,startingColor,r,c)
+            modFloodFill(image,i,j+1,newColor,startingColor,r,c)
+            modFloodFill(image,i-1,j,newColor,startingColor,r,c)
+            modFloodFill(image,i,j-1,newColor,startingColor,r,c)
+        
+        startingColor = image[sr][sc]
+        if not startingColor == newColor:
+            modFloodFill(image,sr,sc,newColor,startingColor,len(image),len(image[0]))
+        return image

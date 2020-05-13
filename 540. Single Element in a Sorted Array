@@ -1,0 +1,26 @@
+class Solution:
+    def singleNonDuplicate(self, nums: List[int]) -> int:
+        n = len(nums)
+        l = 0
+        h = n - 1
+        while l < h:
+            m = (l+h)//2
+            
+            if m-1 >= 0 and nums[m-1] == nums[m]:
+                leftLen = m-1-l
+                rightLen = h - m
+                if leftLen%2 == 0:
+                    l = m + 1
+                else:
+                    h = m - 2
+            elif m+1 < n and nums[m+1] == nums[m]:
+                leftLen = m-l
+                rightLen = h - m - 1
+                if leftLen%2 == 0:
+                    l = m + 2
+                else:
+                    h = m - 1
+            else:
+                return nums[m]
+        return nums[l]
+                

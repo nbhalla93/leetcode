@@ -1,0 +1,22 @@
+class Solution:
+    def removeKdigits(self, num: str, k: int) -> str:
+        n = len(num)
+        stack = collections.deque()
+        for i in num:
+            while k and stack and stack[-1] > i:
+                stack.pop()
+                k -= 1
+
+            if not stack and i == '0':
+                continue
+            else:
+                stack.append(i)
+
+        if k >= len(stack):
+            return "0"
+        else:
+            while k and stack:
+                stack.pop()
+                k -= 1
+
+            return "".join(stack) if stack else "0"

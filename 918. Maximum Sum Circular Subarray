@@ -1,0 +1,31 @@
+class Solution:
+    def maxSubarraySumCircular(self, A: List[int]) -> int:
+        maxValue = A[0]
+        minValue = A[0]
+        totalSum = 0
+        currentMaxSum = 0
+        currentMinSum = 0
+        negCount = 0
+        maxNeg = -sys.maxsize -1 
+        
+        for k in A:
+            totalSum += k
+            if k < 0:
+                negCount += 1
+                maxNeg = max(maxNeg, k)
+                
+            if currentMaxSum + k < 0:
+                currentMaxSum = 0
+            else:
+                currentMaxSum += k  
+                maxValue = max(maxValue, currentMaxSum, k)
+                
+                
+            if currentMinSum + k < 0:
+                currentMinSum += k
+                minValue = min(currentMinSum,minValue,k)
+            else:
+                currentMinSum = 0
+       
+        return max(maxValue, (totalSum-minValue)) if not negCount == len(A) else maxNeg
+        

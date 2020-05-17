@@ -1,0 +1,29 @@
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        if len(s) < len(p):
+            return []
+        
+        countP = collections.defaultdict(int)
+        countS = collections.defaultdict(int)
+        for c in p:
+            countP[c] += 1
+        
+        np = len(p)
+            
+        for i in range(np):
+            countS[s[i]] += 1
+        
+        ns = len(s)
+        indexArray = []
+        for i in range(np,ns):
+            if countP == countS:
+                indexArray.append(i-np)
+             
+            countS[s[i-np]] -= 1
+            if countS[s[i-np]] == 0:
+                del countS[s[i-np]]
+            countS[s[i]] += 1
+        if countP == countS:
+            indexArray.append(i+1-np)
+        return indexArray            
+        

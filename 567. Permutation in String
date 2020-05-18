@@ -1,0 +1,18 @@
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        hash1 = Counter(s1)
+        hash2 = Counter()
+        n2 = len(s2)
+        n1 = len(s1)
+        
+        for i in range(n2):
+            hash2[s2[i]] += 1
+            if i >= len(s1):
+                if hash2[s2[i-n1]] == 1:
+                    del hash2[s2[i-n1]]
+                else:
+                    hash2[s2[i-n1]] -= 1
+            
+            if hash1 == hash2:
+                return True
+        return False

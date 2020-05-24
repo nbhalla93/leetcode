@@ -25,3 +25,25 @@ class Solution:
         return self.developBST(preorder, 0, len(preorder)-1)
         
         
+    #Approach 2
+    def bstFromPreorder(self, preorder: List[int]) -> TreeNode:
+        stack = collections.deque([])
+        head = None
+        for i in preorder:
+            node = TreeNode(i)
+            if not head:
+                head = node
+                stack.append(node)
+                continue
+            
+            top = stack[-1]
+            if i < top.val:
+                top.left = node
+            else:
+                parent = None
+                while stack and i > stack[-1].val:
+                    parent = stack.pop()
+                parent.right = node
+            stack.append(node)
+        return head
+        

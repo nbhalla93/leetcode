@@ -1,0 +1,35 @@
+class GraphNode:
+    def __init__(self):
+        self.inDegree = 0
+        self.outNode = []
+    
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        graph = collections.defaultdict(GraphNode)
+        
+        totalDep = 0
+        for edges in prerequisites:
+            nextCourse, prevCourse = edges[0], edges[1]
+            graph[nextCourse].inDegree += 1
+            graph[prevCourse].outNode.append(nextCourse)
+            totalDep += 1
+        
+        sortedList = collections.deque()
+        for course in range(numCourses+1):
+            if graph[course].inDegree == 0:
+                sortedList.append(course)
+        
+        removedEdges = 0
+        while sortedList:
+            course = sortedList.popleft()
+            for nextCourses in graph[course].outNode:
+                graph[nextCourses].inDegree -= 1
+                removedEdges += 1
+                
+                if graph[nextCourses].inDegree == 0:
+                    sortedList.append(nextCourses)
+        
+        return removedEdges == totalDep
+            
+            
+            

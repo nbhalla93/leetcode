@@ -1,0 +1,11 @@
+class Solution:
+    def searchBST(self, root: TreeNode, val: int) -> TreeNode:
+        head = root
+        while head:
+            if head.val == val:
+                return head
+            elif val > head.val:
+                head = head.right
+            else:
+                head = head.left
+        return head

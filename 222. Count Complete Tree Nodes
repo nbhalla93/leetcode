@@ -1,0 +1,55 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def countNodes(self, root: TreeNode) -> int:
+        complete_nodes = 0
+        
+        if not root:
+            return 0
+        
+        # Counting the depth of the tree
+        # Adding nodes at levels which are complete
+        depth = -1
+        temp = root
+        
+        while temp:
+            depth += 1
+            complete_nodes += 2**depth
+            temp = temp.left
+            
+        # Nodes at last level
+        final_nodes = 2**depth
+        complete_nodes -= final_nodes
+        
+        f_l, f_h = 0, final_nodes-1
+        while f_l <= f_h:
+            f_m = (f_l+f_h)//2 
+            
+            s_l,s_h = 0, final_nodes-1
+            target = f_m
+            point = root
+            
+            while s_l < s_h:
+                s_m = (s_l+s_h)//2
+                
+                if target <= s_m:
+                    s_h = s_m
+                    point = point.left
+                else:
+                    s_l = s_m + 1
+                    point = point.right
+            
+            if point is None:
+                f_h = f_m - 1
+            else:
+                f_l = f_m + 1
+        
+        return complete_nodes + f_l
+
+
+            
+        

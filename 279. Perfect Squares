@@ -1,0 +1,25 @@
+class Solution:
+    def numSquares(self, n: int) -> int:
+        m = math.sqrt(n)
+        m = math.floor(m)
+        m += 1
+        
+        squaresList = []
+        for i in range(1,m):
+            squaresList.append(i*i)
+            
+        least_number_list = [0]*(n+1)
+        for i in range(1, n+1):
+            sol = sys.maxsize
+            for num in squaresList:
+                if num <= i:
+                    sol = min(sol, least_number_list[i-num] + 1)
+                else:
+                    break
+            least_number_list[i] = sol
+        return least_number_list[-1]
+                    
+                    
+                    
+            
+        

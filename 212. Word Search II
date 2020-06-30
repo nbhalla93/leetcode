@@ -1,0 +1,49 @@
+class Trie:
+    def __init__(self):
+        self.map = {}
+        self.wordKey = None
+        
+    def insert(self, word):
+        current = self
+        for c in word:
+            if c not in current.map:
+                node = Trie()
+                current.map[c] = node
+            current = current.map[c]
+        current.wordKey = word
+    
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        trie = Trie()
+        for word in words:
+            trie.insert(word)
+                        
+        r = len(board)
+        c = len(board[0])
+        
+        self.finalList = []
+        
+        def dfs(i,j,r,c,trie):
+           
+            if trie.wordKey:
+                self.finalList.append(trie.wordKey)
+            
+            if i < 0 or j < 0 or i >= r or j >=c or board[i][j] not in trie.map:
+                return 
+            
+            letter = board[i][j]
+            board[i][j] = "0"
+            dfs(i+1,j,r,c,trie.map[letter])
+            dfs(i,j+1,r,c,trie.map[letter])
+            dfs(i-1,j,r,c,trie.map[letter])
+            dfs(i,j-1,r,c,trie.map[letter])
+            board[i][j] = letter
+            
+        for i in range(r):
+            for j in range(c):
+                dfs(i,j,r,c,trie)
+                    
+        return set(self.finalList)
+                
+        
+        

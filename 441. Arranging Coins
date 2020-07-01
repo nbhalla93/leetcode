@@ -1,0 +1,26 @@
+class Solution:
+    # def arrangeCoins(self, n: int) -> int:
+    #     count = 0
+    #     step_size = 1
+    #     while n > 0:
+    #         n = n - step_size
+    #         if n >= 0:
+    #             count += 1
+    #         step_size += 1
+    #     return count
+    
+    def arrangeCoins(self, n: int) -> int:
+        lo = 1
+        hi = n
+        while lo <= hi:
+            mid = (lo+hi)//2
+            size = (mid*(mid+1))/2
+            
+            if size == n:
+                return mid
+            elif size < n:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+        return lo - 1
+        

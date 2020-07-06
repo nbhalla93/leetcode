@@ -1,0 +1,21 @@
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+#         n = len(digits)
+        
+#         stack = deque([])
+#         carry = 1
+#         for i in reversed(range(n)):
+#             sum_value = carry + digits[i]
+#             carry = sum_value//10
+            
+#             stack.appendleft(sum_value%10)
+        
+#         if carry:
+#             stack.appendleft(carry)
+#         return stack
+        num = 1
+        for idx,el in enumerate(digits[::-1]):
+            num +=  el*10**idx
+        return list(str(num))
+            
+        

@@ -1,0 +1,14 @@
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        held = float('-inf')
+        sold = float('-inf')
+        reset = 0
+        
+        
+        for price in prices:
+            presold = sold
+            sold = held + price
+            held = max(reset - price, held)
+            reset = max(reset, presold)
+            
+        return max(sold, reset)

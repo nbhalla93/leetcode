@@ -1,0 +1,19 @@
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        s = s.lower()
+        leng = len(s)
+        l = 0
+        h = leng-1
+        while l < h:
+            while l < h and not s[l].isalnum():
+                l += 1
+            
+            while h > l and not s[h].isalnum():
+                h -= 1
+                
+            if l < h and not s[l] == s[h]:
+                return False
+            
+            l += 1
+            h -= 1
+        return True

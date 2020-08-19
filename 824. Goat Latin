@@ -1,0 +1,25 @@
+class Solution:
+    def do_vowel_stuff(self, word, last_append):
+        new = word + "ma" + last_append
+        return new
+        
+    def do_consonant_stuff(self, word, last_append):
+        new = word[1:] + word[0] + "ma" + last_append
+        return new
+        
+    def toGoatLatin(self, S: str) -> str:
+        result = ""
+        words = S.split()
+        last_append = "a"
+        vowel_set = set(["a","e","i","o","u"])
+        
+        for i,word in enumerate(words):
+            if word[0].lower() in vowel_set:
+                new = self.do_vowel_stuff(word, last_append)
+            else:
+                new = self.do_consonant_stuff(word, last_append)
+            
+            last_append += "a"
+            words[i] = new
+
+        return " ".join(words)

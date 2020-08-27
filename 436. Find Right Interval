@@ -1,0 +1,26 @@
+class Solution:
+    def findInterval(self, search_array, target):
+            l = 0
+            h = len(search_array)
+            while l < h:
+                mid = (l+h)//2
+                if search_array[mid][0] == target:
+                    return search_array[mid][1]
+                elif search_array[mid][0] < target:
+                    l = mid + 1
+                else:
+                    h = mid
+            return search_array[l][1] if (l < len(search_array) and l >= 0) else -1      
+                    
+    
+    def findRightInterval(self, intervals: List[List[int]]) -> List[int]:
+        search_array = []
+        for i,interval in enumerate(intervals):
+            search_array.append((interval[0], i))
+            
+        search_array = sorted(search_array)
+
+        final_result = []
+        for interval in intervals:
+            final_result.append(self.findInterval(search_array, interval[1]))
+        return final_result

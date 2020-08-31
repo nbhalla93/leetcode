@@ -1,0 +1,24 @@
+class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        remove_index = set()
+        stack = []
+        
+        for i,c in enumerate(s):
+            if c == "(":
+                stack.append(i)
+            elif c == ")":
+                if not stack:
+                    remove_index.add(i)
+                else:
+                    stack.pop()                
+        
+        remove_index = remove_index.union(set(stack))
+        
+        new_s = []
+        for i,c in enumerate(s):
+            if i not in remove_index:
+                new_s.append(c)
+        
+        return "".join(new_s)
+            
+        

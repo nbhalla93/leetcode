@@ -1,0 +1,21 @@
+class Solution:
+    def addStrings(self, num1: str, num2: str) -> str:
+        l1 = len(num1)
+        l2 = len(num2)
+        result = ""
+        carry = 0
+        p1 = l1 - 1
+        p2 = l2 - 1
+        while p1 >= 0 or p2 >= 0:
+            a = ord(num1[p1]) - ord('0') if p1 >= 0 else 0
+            b = ord(num2[p2]) - ord('0') if p2 >= 0 else 0
+            sum_value = a + b + carry
+            result = str(sum_value%10) + result
+            carry = sum_value//10
+            
+            p1 -= 1
+            p2 -= 1
+            
+        if carry:
+            result = str(carry) + result
+        return result

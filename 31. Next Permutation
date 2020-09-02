@@ -1,0 +1,39 @@
+class Solution:
+    def makeIncreasing(self, nums, start, n):
+        i = start
+        j = n-1
+        while i < j:
+            nums[i], nums[j] = nums[j], nums[i]
+            i += 1
+            j -= 1
+            
+    def nextPermutation(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        n = len(nums)
+        i = n-2
+        while i >= 0:
+            if nums[i] < nums[i+1]:
+                break
+            i -= 1
+
+        if i == -1:
+            self.makeIncreasing(nums, 0, n)
+        else:
+            j = n-1
+            while nums[i] >= nums[j]:
+                j -= 1
+            nums[i], nums[j] = nums[j], nums[i]
+            self.makeIncreasing(nums, i+1, n)
+
+
+            
+        
+        
+        
+        
+            
+        
+    
+        

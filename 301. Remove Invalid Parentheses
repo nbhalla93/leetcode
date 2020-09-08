@@ -1,0 +1,50 @@
+class Solution:
+    def removeInvalidParentheses(self, s):
+        """
+        :type s: str
+        :rtype: List[str]
+        """
+        self.valid_expressions = set([])
+        def recurse(s, index, left_count, right_count, left_rem, right_rem, expr, n):
+            if index == n:
+                if left_rem == 0 and right_rem == 0:
+                    valid = "".join(expr)
+                    self.valid_expressions.add(valid)
+            else:
+                char = s[index]
+                if not char == "(" and not char == ")":
+                    expr.append(char)
+                    recurse(s, index+1, left_count, right_count, left_rem, right_rem, expr, n)
+                    expr.pop()
+                elif char == "(":
+                    if left_rem > 0:
+                        recurse(s, index+1, left_count, right_count, left_rem - 1, right_rem, expr, n)
+                    
+                    expr.append(char)
+                    recurse(s, index+1, left_count + 1, right_count, left_rem, right_rem, expr, n)
+                    expr.pop()
+                    
+
+                else:
+                    if right_rem > 0:
+                        recurse(s, index+1, left_count, right_count, left_rem, right_rem - 1, expr, n)
+                        
+                    expr.append(char)
+                    if right_count < left_count:
+                        recurse(s, index+1, left_count, right_count + 1, left_rem, right_rem, expr, n)
+                    expr.pop()
+                    
+        left = 0
+        right = 0
+        for c in s:
+            if c == "(":
+                left += 1
+            elif c == ")":
+                if left > 0:
+                    left -= 1
+                else:
+                    right += 1
+
+        n = len(s)
+        recurse(s, 0, 0, 0, left, right, [], n)
+        return list(self.valid_expressions)

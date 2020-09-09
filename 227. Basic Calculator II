@@ -1,0 +1,46 @@
+class Solution:
+    def readTheNumber(self, s, i, n):
+        number = 0
+        while i < n:
+            if s[i] in ["*","/","+","-"]:
+                return (number,i-1)
+            else:
+                number = number*10 + int(s[i])
+            i += 1
+        return (number, i-1)
+            
+    def calculate(self, s: str) -> int:
+        stack = deque([])
+        i = 0
+        
+        s = s.replace(" ", "")
+        n = len(s)
+
+        is_next_number_negative = False
+        while i < n:   
+            if s[i] == "-":
+                is_next_number_negative = True
+            elif s[i] in ["+","*","/"]:
+                is_next_number_negative = False
+                                    
+                if s[i] in ["*","/"]:
+                    operator = s[i]
+                    new_number,i = self.readTheNumber(s, i+1, n)
+                    last_number = stack.pop() 
+                    
+                    multiplier = 1 if last_number > 0 else -1
+                    last_number = abs(last_number)
+                    number = last_number*new_number if operator == "*" else math.floor(last_number/new_number)
+                    number *= multiplier
+                    stack.append(number*-1 if is_next_number_negative else number)
+            else:
+                number,i = self.readTheNumber(s, i, n)
+                stack.append(number*-1 if is_next_number_negative else number)
+            i += 1
+            
+        result = 0
+        while stack:
+            result += stack.pop()
+        return result
+                
+        

@@ -1,0 +1,40 @@
+import collections
+class Solution:
+    def longestSubarray(self, nums: List[int], limit: int) -> int:
+        if not nums:
+            return 0
+        
+        minqueue = collections.deque([])
+        maxqueue = collections.deque([])
+        max_length = -1
+        
+        sliding_window = collections.deque([])
+        for num in nums:
+            sliding_window.append(num)
+            while minqueue and minqueue[-1] > num:
+                minqueue.pop()
+            minqueue.append(num)
+            
+            while maxqueue and maxqueue[-1] < num:
+                maxqueue.pop()
+            maxqueue.append(num)
+            
+            current_range = maxqueue[0] - minqueue[0]
+            while current_range > limit:
+                elem_to_pop = sliding_window[0]
+                sliding_window.popleft()  
+                if elem_to_pop == maxqueue[0]:
+                    maxqueue.popleft()
+                
+                if elem_to_pop == minqueue[0]:
+                    minqueue.popleft()
+                
+                current_range = maxqueue[0] - minqueue[0]
+            
+            max_length = max(max_length, len(sliding_window))
+        return max_length
+            
+            
+            
+            
+            

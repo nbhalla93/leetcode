@@ -1,0 +1,32 @@
+# Applying the greedy approach because to minimize m_i, we need to minimize m_(i-1) 
+# Elements in s_(i-1) wont be greater than current interval end point, As long as the two biggest elements intersect or not
+# we can conclude what is required
+#s_i is always sorted
+
+class Solution:
+    def intersectionSizeTwo(self, intervals: List[List[int]]) -> int:
+        intervals.sort(key=lambda x: x[1])
+        int_s = []
+        m = sys.maxsize
+        
+        for interval in intervals:
+            s = interval[0]
+            e = interval[1]
+            
+            if not int_s:
+                int_s.append(e-1)
+                int_s.append(e)
+                m = 2
+            else:
+                l_1 = int_s[-1]
+                l_2 = int_s[-2]
+                
+
+                if l_1 >= s and l_2 < s:
+                    int_s.append(e)
+                    m += 1
+                elif l_1 < s and l_2 < s:
+                    int_s.append(e-1)
+                    int_s.append(e)
+                    m += 2
+        return m

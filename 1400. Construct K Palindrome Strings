@@ -1,0 +1,22 @@
+class Solution:
+    def canConstruct(self, s: str, k: int) -> bool:
+        if len(s) < k:
+            return False
+        
+        char_array = [0]*26
+        char_set = set([])
+        for char in s:
+            char_array[ord(char) - ord('a')] += 1
+            char_set.update(char)
+            
+        
+        for char in char_set:
+            char_count = char_array[ord(char) - ord('a')]
+            if char_count%2 != 0:
+                k -= 1
+                if k < 0:
+                    return False
+        return True
+        
+        
+        

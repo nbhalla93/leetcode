@@ -1,0 +1,38 @@
+"""
+# Definition for a QuadTree node.
+class Node:
+    def __init__(self, val, isLeaf, topLeft, topRight, bottomLeft, bottomRight):
+        self.val = val
+        self.isLeaf = isLeaf
+        self.topLeft = topLeft
+        self.topRight = topRight
+        self.topRight = bottomLeft
+        self.bottomRight = bottomRight
+"""
+
+class Solution:
+    def construct_quad_tree(self,grid, l1,l2,h1,h2):
+        if l1 == h1 and l2 == h2:
+            return Node(grid[l1][l2], True, None,None,None,None)
+        
+        else:
+            mid_row = l1 + (h1-l1)//2
+            mid_col = l2 + (h2-l2)//2
+            
+            topLeft = self.construct_quad_tree(grid, l1, l2, mid_row,mid_col)
+            topRight = self.construct_quad_tree(grid, l1, mid_col + 1, mid_row, h2)
+            bottomLeft = self.construct_quad_tree(grid, mid_row + 1, l2, h1, mid_col)
+            bottomRight = self.construct_quad_tree(grid, mid_row+1,mid_col+1,h1,h2)
+            val = topLeft.val or topRight.val or bottomLeft.val or bottomRight.val
+            if topLeft.isLeaf and topRight.isLeaf and bottomLeft.isLeaf and bottomRight.isLeaf and topLeft.val == topRight.val == bottomLeft.val == bottomRight.val:
+                return Node(val, True, None,None,None,None)
+            else:
+                return Node(val, False, topLeft,topRight,bottomLeft,bottomRight)
+        
+    def construct(self, grid: List[List[int]]) -> 'Node':
+        n = len(grid)
+        if n == 0:
+            return None
+        else:
+            return self.construct_quad_tree(grid,0,0,n-1,n-1)
+        

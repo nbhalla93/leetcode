@@ -1,0 +1,61 @@
+class Solution:
+#     minValue = sys.maxsize 
+    
+#     def find_min_cost(self, grid, visited, i, j, cost, m, n):
+#         if i < 0 or i >= m or j < 0 or j >= n or visited[i][j] != -1:
+#             return
+        
+#         if i == m - 1 and j == n-1:
+#             self.minValue = min(self.minValue, cost)
+#             return
+        
+#         visited[i][j] = cost
+#         new_dir = grid[i][j]
+#         self.find_min_cost(grid,visited, i, j+1, cost if new_dir == 1 else cost + 1, m,n) 
+#         self.find_min_cost(grid,visited, i, j-1, cost if new_dir == 2 else cost + 1, m,n) 
+#         self.find_min_cost(grid,visited, i+1, j, cost if new_dir == 3 else cost + 1, m,n) 
+#         self.find_min_cost(grid,visited, i-1, j, cost if new_dir == 4 else cost + 1, m,n) 
+#         visited[i][j] = -1      
+        
+            
+#     def minCost(self, grid: List[List[int]]) -> int:
+#         m = len(grid)
+#         n = len(grid[0])
+        
+#         visited = [[-1]*n for _ in range(m)]
+#         self.find_min_cost(grid, visited, 0,0, 0,m,n)
+#         return self.minValue
+
+    def minCost(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        
+        cost = {}
+        cost[(0,0)] = 0
+        
+        visited = set([])
+        new_dir = [(0,1,1),(0,-1,2),(1,0,3),(-1,0,4)]
+        heap = [(0,0,0)]
+        while heap:
+            c,i,j = heappop(heap)
+            
+            if (i,j) in visited:
+                continue
+            
+            visited.add((i,j))
+            if i == m - 1 and j == n-1:
+                return c
+            
+            for ki,kj,d in new_dir:
+                ni,nj = i + ki, j + kj
+                cc = c if d == grid[i][j] else c + 1
+                
+                if ni >= 0 and ni < m and nj >= 0 and nj < n and (ni,nj) not in visited and ((ni,nj) not in cost or cc < cost[(ni,nj)]):
+                    cost[(ni,nj)] = cc
+                    heappush(heap,(cc,ni,nj))
+        
+        return -1
+                
+        
+        
+        

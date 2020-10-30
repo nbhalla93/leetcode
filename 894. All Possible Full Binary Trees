@@ -1,0 +1,27 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    memo = {0: [], 1: [TreeNode(0)]}
+
+    def allPossibleFBT(self, N: int) -> List[TreeNode]:
+        if N not in Solution.memo:
+            ans = []
+            for i in range(N):
+                j = N - 1 - i
+                left = self.allPossibleFBT(i)
+                right = self.allPossibleFBT(j)
+                for l in left:
+                    for r in right:
+                        root = TreeNode(0)
+                        root.left = l
+                        root.right = r
+                        ans.append(root)
+            Solution.memo[N] = ans
+
+            
+        return Solution.memo[N]
+        

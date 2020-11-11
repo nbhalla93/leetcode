@@ -1,0 +1,12 @@
+class Solution:
+    def flipAndInvertImage(self, A: List[List[int]]) -> List[List[int]]:
+        if not A:
+            return A
+        c = len(A[0])
+        for r, row in enumerate(A):
+            reverse_row = row[::-1]
+            for i in range(c):
+                A[r][i] =  0 if reverse_row[i] else 1
+        return A
+            
+        

@@ -1,0 +1,47 @@
+from collections import Counter 
+from collections import defaultdict 
+
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        if not t or not s:
+            return ""
+         
+        dict_t = Counter(t)
+        dict_s = defaultdict(int)
+        
+        formed = 0
+        required = len(dict_t)
+        
+        r = 0
+        l = 0
+        len_s = len(s)
+        ans = (sys.maxsize,l,r)
+        while r < len_s:
+            char = s[r]
+            dict_s[char] += 1
+            
+            if char in dict_t and dict_s[char] == dict_t[char]:
+                formed += 1
+                
+            while l <= r and formed == required:
+                old_char = s[l]
+                
+                if r - l + 1 < ans[0]:
+                    ans = (r - l + 1, l, r)
+                
+                dict_s[old_char] -= 1
+                if old_char in dict_t and dict_s[old_char] < dict_t[old_char]:
+                    formed -= 1 
+                    
+                l += 1
+
+            
+            r += 1
+        return "" if ans[0] == sys.maxsize else s[ans[1]:ans[2] + 1]
+                
+                
+                
+                
+                
+            
+        

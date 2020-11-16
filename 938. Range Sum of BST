@@ -1,0 +1,16 @@
+class Solution:
+    def rangeSumBST(self, root: TreeNode, low: int, high: int) -> int:
+        self.sum_value = 0
+        
+        def getSum(root):
+            if not root:
+                return None
+            
+            self.sum_value += root.val if low <= root.val <= high else 0
+            if low < root.val:
+                getSum(root.left)
+            if root.val < high:
+                getSum(root.right)
+            
+        getSum(root)
+        return self.sum_value

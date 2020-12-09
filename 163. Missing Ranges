@@ -1,0 +1,22 @@
+class Solution:
+    def findMissingRanges(self, nums: List[int], lower: int, upper: int) -> List[str]:
+        new_nums = [lower - 1]
+        l = 2
+        for num in nums:
+            new_nums.append(num)
+            l += 1
+        new_nums.append(upper+1)
+        miss_ranges = []
+        
+        start = 0
+        end = 1
+        while end < l:
+            diff = new_nums[end] - new_nums[start]
+            if diff == 2:
+                miss_ranges.append(str(new_nums[start]+1))
+            elif diff > 2:
+                miss_ranges.append(str(new_nums[start]+1)+"->"+str(new_nums[end]-1))
+            
+            start += 1
+            end += 1
+        return miss_ranges

@@ -1,0 +1,28 @@
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        place_pointer = 0
+        count_pointer = 0
+        elem = None
+        count = 0
+        N = len(nums)
+        
+        while count_pointer < N:
+            elem = nums[count_pointer]
+            count = 0
+            while count_pointer < N and nums[count_pointer] == elem:
+                count_pointer += 1
+                count += 1
+                
+            i = 0
+            while i < min(count,2):
+                nums[place_pointer+i] = elem
+                i += 1
+            
+            if count <= 2:
+                place_pointer += count
+            else:
+                place_pointer += 2
+        return place_pointer
+                    
+                
+        

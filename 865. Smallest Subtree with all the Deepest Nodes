@@ -1,0 +1,32 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def subtreeWithAllDeepest(self, root: TreeNode) -> TreeNode:
+        depth = {None: -1}
+        def depth_tree(node, parent=None):
+            if node:
+                depth[node] = depth[parent] + 1
+                depth_tree(node.left, node)
+                depth_tree(node.right, node)
+        depth_tree(root)
+        
+        max_depth = max(depth.values())
+        
+        def findSubtree(node):
+            if not node:
+                return None
+            
+            if depth[node] == max_depth:
+                return node
+            
+            L = findSubtree(node.left)
+            R = findSubtree(node.right)
+            
+            if L and R:
+                return node
+            return L or R
+        return findSubtree(root)

@@ -1,0 +1,34 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def plusOne(self, head: ListNode) -> ListNode:
+        temp_head = ListNode(0)
+        temp_head.next = head
+        
+        not_nine = temp_head
+        curr = head
+        while curr:
+            if curr.val != 9:
+                not_nine = curr
+            curr = curr.next
+        
+        if not_nine:
+            not_nine.val = not_nine.val + 1
+            not_nine = not_nine.next
+        
+        while not_nine:
+            if not_nine.val == 9:
+                not_nine.val = 0
+            
+            not_nine = not_nine.next
+        
+        return temp_head if temp_head.val == 1 else temp_head.next
+        
+            
+            
+            
+        
+        

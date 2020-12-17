@@ -1,0 +1,17 @@
+class Solution:
+    prev = None
+    
+    def validate(self, root):
+        if not root:
+            return True
+        
+        left = self.validate(root.left)
+        if root.val <= self.prev:
+            return False
+        self.prev = root.val
+        right = self.validate(root.right)
+        return left and right 
+    
+    def isValidBST(self, root: TreeNode) -> bool:
+        self.prev = -sys.maxsize - 1   
+        return self.validate(root)

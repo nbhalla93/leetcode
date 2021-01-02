@@ -1,0 +1,17 @@
+class Solution:
+    def canFormArray(self, arr: List[int], pieces: List[List[int]]) -> bool:
+        start_hash = {p[0]: p for p in pieces}
+
+        i = 0
+        n = len(arr)
+        while i < n:
+            if arr[i] not in start_hash:
+                return False
+            
+            target = start_hash[arr[i]]
+            for x in target:
+                if x != arr[i]:
+                    return False
+                i+= 1
+        return True          
+        

@@ -1,0 +1,72 @@
+class DoublyLinkedList:
+    def __init__(self, val):
+        self.next = None
+        self.prev = None
+        self.val = val
+        
+class MaxStack:
+    from heapq import heapify, heappush, heappop
+    
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.adress_map = collections.defaultdict(list)
+        self.head = DoublyLinkedList(0)
+        self.tail = self.head
+        self.heap_array = []
+        
+    def push(self, x: int) -> None:
+        node = DoublyLinkedList(x)
+        self.adress_map[x].append(node)
+        heappush(self.heap_array, -x)
+        
+        self.tail.next = node
+        node.prev = self.tail
+        self.tail = node
+
+    def pop(self) -> int:
+        val = self.tail.val
+        self.tail = self.tail.prev
+        self.tail.next = None
+        
+        self.adress_map[val].pop()
+        if not self.adress_map[val]:
+            del self.adress_map[val]
+            
+        return val
+
+    def top(self) -> int:
+        return self.tail.val
+
+    def peekMax(self) -> int:
+        while -self.heap_array[0] not in self.adress_map:
+            heappop(self.heap_array)
+        return -self.heap_array[0]
+
+    def popMax(self) -> int:
+     
+        max_val = self.peekMax()
+        
+        node = self.adress_map[max_val].pop()
+        if not self.adress_map[max_val]:
+            del self.adress_map[max_val]
+            
+        if node == self.tail:
+            self.tail = self.tail.prev
+        
+        if node.prev:
+            node.prev.next = node.next
+        if node.next:
+            node.next.prev = node.prev
+        
+        return max_val
+        
+
+# Your MaxStack object will be instantiated and called as such:
+# obj = MaxStack()
+# obj.push(x)
+# param_2 = obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.peekMax()
+# param_5 = obj.popMax()

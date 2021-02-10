@@ -1,0 +1,36 @@
+class TreeNode:
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+        self.left = None
+        self.right = None
+        
+class MyCalendar:
+    def __init__(self):
+        self.root = None
+
+    def book(self, start: int, end: int) -> bool:
+        if not self.root:
+            self.root = TreeNode(start, end)
+            return True
+        
+        head = self.root
+        while head:
+            if end <= head.start:
+                if head.left:
+                    head = head.left
+                else:
+                    head.left = TreeNode(start, end)
+                    return True
+            elif start >= head.end:
+                if head.right:
+                    head = head.right
+                else:
+                    head.right = TreeNode(start, end) 
+                    return True
+            else:
+                return False
+            
+# Your MyCalendar object will be instantiated and called as such:
+# obj = MyCalendar()
+# param_1 = obj.book(start,end)

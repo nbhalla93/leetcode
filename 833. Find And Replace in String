@@ -1,0 +1,25 @@
+class Solution:
+    def findReplaceString(self, S: str, indexes: List[int], sources: List[str], targets: List[str]) -> str:
+        
+        i = 0
+        i_p = 0
+        N = len(S)
+        R = len(indexes)
+        new_index_tuple = [(indexes[i], sources[i], targets[i]) for i in range(R)]
+        new_index_tuple.sort()
+        result = ""
+        
+        while i < N:
+            if i_p < R and i == new_index_tuple[i_p][0]:
+                n = len(new_index_tuple[i_p][1])
+                if S[i:i+n] == new_index_tuple[i_p][1]:
+                    result += new_index_tuple[i_p][2]
+                else:
+                    result += S[i:i+n]
+                i = i+n
+                i_p += 1
+            else:
+                result += S[i]
+                i += 1
+        return result
+        

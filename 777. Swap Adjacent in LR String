@@ -1,0 +1,31 @@
+class Solution:
+    def canTransform(self, start: str, end: str) -> bool:
+        #No L and R can cross each other
+        if start.replace("X", "") != end.replace("X", ""):
+            return False
+        
+        # All new positions of L in end should be smaller than L's position in start
+        n = len(start)
+        t = 0
+        for i in range(n):
+            if start[i] == "L":
+                while end[t] != "L": 
+                    t += 1
+            
+                if t > i:
+                    return False
+                t += 1
+            
+        # All new positions of R in end should be greater than R's position in start
+        t = 0
+        for i in range(n):
+            if start[i] == "R":
+                while end[t] != "R": 
+                    t += 1
+            
+                if t < i:
+                    return False
+                t += 1
+        
+        return True
+        

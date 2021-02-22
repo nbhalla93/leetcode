@@ -1,0 +1,47 @@
+class Solution:
+    def get_char_Freq_Array(self, S):
+        rel_cha = []
+        rel_cha_freq = []
+        i = 0
+        last = None
+        count = 0
+        while i < len(S):
+            if last and last != S[i]:
+                rel_cha.append(last)
+                rel_cha_freq.append(count)
+                count = 1
+                last = S[i]
+            else:
+                last = S[i]
+                count += 1
+            i += 1
+        rel_cha.append(last)
+        rel_cha_freq.append(count)
+        return rel_cha, rel_cha_freq
+    
+    def compare(self, main_char, main_freq, ref_char, ref_freq):
+        if len(main_char) != len(ref_char):
+            return 0
+
+        for i,char in enumerate(main_char):
+            if char != ref_char[i] or main_freq[i] < ref_freq[i]:
+                return 0
+            elif main_freq[i] > ref_freq[i] and main_freq[i] < 3:
+                return 0
+        return 1
+    
+    def expressiveWords(self, S: str, words: List[str]) -> int:
+        main_char, main_freq = self.get_char_Freq_Array(S)
+        count = 0
+        
+        for word in words:
+            ref_char, ref_freq = self.get_char_Freq_Array(word)
+            count += self.compare(main_char, main_freq, ref_char, ref_freq)
+        return count       
+                
+                
+                
+        
+        
+                        
+        

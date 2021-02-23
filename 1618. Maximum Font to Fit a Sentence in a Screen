@@ -1,0 +1,54 @@
+# """
+# This is FontInfo's API interface.
+# You should not implement it, or speculate about its implementation
+# """
+#class FontInfo(object):
+#    Return the width of char ch when fontSize is used.
+#    def getWidth(self, fontSize, ch):
+#        """
+#        :type fontSize: int
+#        :type ch: char
+#        :rtype int
+#        """
+# 
+#    def getHeight(self, fontSize):
+#        """
+#        :type fontSize: int
+#        :rtype int
+#        """
+class Solution:
+    def get_text_width_and_height(self, text, font_size, fontInfo):
+        height = fontInfo.getHeight(font_size)
+        width = 0
+        for i in text:
+            width += fontInfo.getWidth(font_size, i)
+        return (width,height)
+        
+    def maxFont(self, text: str, w: int, h: int, fonts: List[int], fontInfo : 'FontInfo') -> int:
+        ans = -1
+        
+        l = 0
+        r = len(fonts) - 1
+        
+        while l <= r:
+            m = (l+r)//2
+            text_width, text_height = self.get_text_width_and_height(text, fonts[m], fontInfo)
+            if text_height > h or text_width > w:
+                r = m - 1
+            else:
+                l = m + 1
+                ans = m
+        return fonts[ans] if ans != -1 else -1
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        

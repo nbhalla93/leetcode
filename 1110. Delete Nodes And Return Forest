@@ -1,0 +1,36 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def dfs_del_nodes(self, root, result, parent, direction, to_delete_set):
+        if root.val in to_delete_set:
+            if parent and direction == -1:
+                parent.left = None
+            elif parent and direction == 1:
+                parent.right = None
+                
+            if root.left:
+                self.dfs_del_nodes(root.left, result, None, 0, to_delete_set)
+
+            if root.right:
+                self.dfs_del_nodes(root.right, result, None, 0, to_delete_set)
+        else:
+            if not parent:
+                result.append(root)
+                
+            if root.left:
+                self.dfs_del_nodes(root.left, result, root, -1, to_delete_set)
+                
+            if root.right:
+                self.dfs_del_nodes(root.right, result, root, 1, to_delete_set)
+
+        return result
+    
+    def delNodes(self, root: TreeNode, to_delete: List[int]) -> List[TreeNode]:
+        result = []
+        to_delete_set = set(to_delete)
+        return self.dfs_del_nodes(root, result, None, 0, to_delete_set)
+        

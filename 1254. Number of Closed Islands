@@ -1,0 +1,29 @@
+class Solution:
+    def fill_outer_island(self, grid, i, j , r, c):
+        if i < 0 or i >= r or j < 0 or j >= c or grid[i][j] == 1:
+            return 
+        
+        grid[i][j] = 1
+        self.fill_outer_island(grid, i-1, j, r, c)
+        self.fill_outer_island(grid, i, j-1, r, c)
+        self.fill_outer_island(grid, i+1, j, r, c)
+        self.fill_outer_island(grid, i, j+1, r, c)
+        
+           
+    def closedIsland(self, grid: List[List[int]]) -> int:
+        r = len(grid)
+        c = len(grid[0])
+                
+        for i in range(r):
+            for j in range(c):
+                if (i == 0 or j == 0 or i == r-1 or j == c-1) and grid[i][j] == 0:
+                    self.fill_outer_island(grid, i,j,r,c)
+        
+        count = 0
+        for i in range(r):
+            for j in range(c):
+                if grid[i][j] == 0:
+                    count += 1 
+                    self.fill_outer_island(grid, i,j,r,c)
+        return count
+        

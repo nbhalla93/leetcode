@@ -1,0 +1,12 @@
+class Solution:
+    def isPossibleDivide(self, nums: List[int], k: int) -> bool:
+        c = collections.Counter(nums)
+        last_checked, opened = -1, 0
+        sequence = collections.deque()
+        
+        for i in sorted(c):
+            if opened > c[i] or opened > 0 and i != last_checked + 1: return False
+            sequence.append(c[i] - opened)
+            last_checked, opened = i, c[i]
+            if len(sequence) == k: opened -= sequence.popleft()
+        return opened == 0

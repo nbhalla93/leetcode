@@ -1,0 +1,23 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def findDuplicateSubtrees(self, root: TreeNode) -> List[TreeNode]:
+        counter = collections.Counter()
+        ans = []
+        def lookup(node):
+            if node:
+                uid = "%s,%s,%s" % (str(node.val), lookup(node.left), lookup(node.right))
+                counter[uid] += 1
+                if counter[uid] == 2:
+                    ans.append(node)
+                return uid
+            else:
+                return "#"
+        lookup(root)
+        return ans
+
+        

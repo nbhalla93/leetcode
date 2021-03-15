@@ -1,0 +1,27 @@
+from heapq import heappush, heappop
+class Solution:
+    def smallestRange(self, nums: List[List[int]]) -> List[int]:
+        array = []
+        min_value = sys.maxsize
+        max_value = - sys.maxsize - 1 
+        for i, num in enumerate(nums):
+            heappush(array, (num[0], 0, i))
+            max_value = max(max_value, num[0])
+        
+        min_value = array[0][0]
+        min_range = max_value - min_value
+        ans = [min_value, max_value]
+        while array:
+            node, index, list_value = heappop(array)
+            if index + 1 >= len(nums[list_value]):
+                return ans
+            else:
+                heappush(array, (nums[list_value][index+1], index+1, list_value))
+                min_value = array[0][0]
+                max_value = max(max_value, nums[list_value][index+1])
+                if max_value - min_value < min_range:
+                    min_range = max_value - min_value
+                    ans = [min_value, max_value]
+        return ans
+
+        

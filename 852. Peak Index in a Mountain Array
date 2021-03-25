@@ -1,0 +1,17 @@
+class Solution:
+    def peakIndexInMountainArray(self, A: List[int]) -> int:
+        n = len(A)
+        l = 0
+        h = n - 1
+        
+        while l <= h:
+            m = (l+h)//2
+            
+            if A[m-1] < A[m] and A[m] > A[m+1]:
+                return m
+            elif A[m-1] < A[m] < A[m+1]:
+                l = m + 1
+            elif A[m-1] > A[m] > A[m+1]:
+                h = m - 1
+        return -1
+        

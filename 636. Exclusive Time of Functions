@@ -1,0 +1,29 @@
+class Solution:
+    def exclusiveTime(self, n: int, logs: List[str]) -> List[int]:
+        # Variable to store what was the last execution step
+        prev = 0
+        
+        # Stack to hold list of running functions
+        stack = []
+        
+        # Output array to hold final time
+        output = [0]*n
+        
+        for log in logs:
+            split = log.split(":")
+            fn,action,time = int(split[0]), split[1], int(split[2])
+            
+            if action == "end":
+                stack.pop()
+                output[fn] += time - prev + 1
+                prev = time + 1
+            else:
+                if stack:
+                    output[stack[-1]] += time - 1 - prev + 1
+                prev = time
+                stack.append(fn)
+
+        return output
+            
+            
+        
